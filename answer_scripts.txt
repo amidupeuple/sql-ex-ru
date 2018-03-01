@@ -21,3 +21,6 @@ select ships.name from ships join classes on ships.class = classes.class where s
 
 #38
 select country from classes where type = 'bb' intersect select country from classes where type = 'bc';
+
+#39
+select * from (select outcomes.ship, battles.date from outcomes join battles on outcomes.battle = battles.name) t1 join (select outcomes.ship, battles.date from outcomes join battles on outcomes.battle = battles.name where result = 'damaged') t2 on t1.ship = t2.ship;
