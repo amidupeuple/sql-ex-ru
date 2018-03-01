@@ -1,0 +1,23 @@
+#20: (NOT READY)
+select maker, count(*) from (select distinct product.maker, pc.model from pc join product on pc.model = product.model) t group by maker having count(*) >= 3;
+
+#30:
+select case when t_in.point is null then t_out.point else t_in.point end point, case when t_in.date is null then t_out.date else t_in.date end date,  t_out.sum_out, t_in.sum_inc from (select point, date, sum(inc) as sum_inc from income group by point, date) t_in full join (select point, date, sum(out) as sum_out from outcome group by point, date) as t_out on t_in.point = t_out.point and t_in.date = t_out.date;
+
+#31
+select class, country from classes where bore >= 16;
+
+#32
+select classes.country, cast(avg(power(classes.bore*1.0, 3)/2) as numeric(6,2)) as avg_mw from classes join (select distinct case when ships.class is null then outcomes.ship else ships.class end class_p, case when ships.name is null then outcomes.ship else ships.name end name_p from ships full join outcomes on ships.name = outcomes.ship) t on classes.class = t.class_p group by classes.country;
+
+#33
+select ship  from outcomes where battle='North Atlantic' and result = 'sunk';
+
+#34
+select distinct case when ships.class is null then outcomes.ship else ships.class end class_p, case when ships.name is null then outcomes.ship else ships.name end name_p from ships full join outcomes on ships.name = outcomes.ship;
+
+#34
+select ships.name from ships join classes on ships.class = classes.class where ships.launched is not null and ships.launched >= 1922 and classes.type = 'bb' and displacement > 35000;
+
+#38
+select country from classes where type = 'bb' intersect select country from classes where type = 'bc';
